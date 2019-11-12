@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HOME</title>
+
+    <link rel="stylesheet" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'sw/sweetalert.css' %}">
+
+</head>
+<body>
+<h1>good,good,study!</h1>
+<h1>day,day,up!</h1>
+<button class='btn btn-danger'>谈谈谈</button>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'sw/sweetalert.min.js' %}"></script>
+<script>
+    $(".btn-danger").on("click", function () {
+      swal({
+        title: "are you sure?",
+        text: "怎么说?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "删除",
+        cancelButtonText: "取消",
+        closeOnConfirm: false
+        },
+        function () {
+          {#var deleteId = $(this).parent().parent().attr("data_id");#}
+            var deleteId=1;
+          $.ajax({
+            url: "/delete_book/",
+            type: "post",
+            data: {"id": deleteId,'csrfmiddlewaretoken':"{{ csrf_token }}"},
+            success: function (data) {
+              if (data.status === 1000) {
+                swal("删除成功!", "你可以准备跑路了！", "success");
+              } else {
+                swal("删除失败", "你可以再尝试一下！", "error")
+              }
+            }
+        });
+    })});
+
+
+
+
+</script>
+</body>
+</html>

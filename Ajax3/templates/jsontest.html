@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSONTEST</title>
+</head>
+<body>
+
+    用户名: <input type="text" id="username">
+    密码: <input type="password" id="password">
+
+    <button id="sub">提交</button>
+    <span class="error"></span>
+
+</body>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/jquery.cookie.js' %}"></script>
+
+<script>
+
+    $('#sub').click(function () {
+        var uname = $('#username').val();
+        var pwd = $('#password').val();
+
+        $.ajax({
+            url:'{% url "jsontest" %}',
+            type:'post',
+            // data:{username:uname,password:pwd,csrfmiddlewaretoken:csrf},
+            //data:JSON.stringify({username:uname,password:pwd}),
+
+            data:{username:uname,password:pwd},
+            headers:{
+                // contentType:'application/json',
+                "X-CSRFToken":$.cookie('csrftoken'),
+            },
+            success:function (res) {
+                {#console.log(res,typeof res); // statusmsg {"status": 1001, "msg": "登录失败"}#}
+                {#var res = JSON.parse(res);  //-- json.loads()#}
+                console.log(res,typeof res);
+                //JSON.stringify()  -- json.dumps
+                if (res.status === 1000){
+                    // $('.error').text('登录成功');
+                    location.href = '/home/'; // http://127.0.0.1:8000/home/
+
+                }else{
+                    $('.error').text(res.msg);
+                }
+
+            }
+
+        })
+
+    })
+
+
+
+</script>
+
+</html>

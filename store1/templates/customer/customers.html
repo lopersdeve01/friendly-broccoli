@@ -1,0 +1,125 @@
+{% extends 'starter.html' %}
+
+{% block username %}
+    <span class="hidden-xs">{{ username }}</span>
+{% endblock %}
+
+
+  {% block username1  %}
+<p>
+ {{ username }} - Web Developer
+  <small>{{ time }}</small>
+</p>
+  {% endblock %}
+
+  {% block username2  %}
+<p>
+  {{ username }} - Web Developer
+  <small>{{ time }}</small>
+</p>
+  {% endblock %}
+
+
+
+
+
+
+
+{% block title %}
+    <h1>
+       {% if tag == '1' %}
+         公户信息展示
+
+       {% else %}
+          我的客户信息
+       {% endif %}
+    </h1>
+  {% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+    <a href="{% url 'sales:addcustomer' %}" class="btn btn-primary">添加客户</a>
+    <form class="form-inline pull-right" action="" method="get">
+{#        {% csrf_token %}#}
+      <div class="form-group">
+          <select name="search_field" id="search_field" class="form-control">
+              <option value="qq__contains">qq</option>
+              <option value="name__contains">姓名</option>
+          </select>
+
+          <input type="text" class="form-control" id="search-word" placeholder="请输入" name="keyword" value="{{ keyword|default:'' }}">
+      </div>
+      <button type="submit" class="btn btn-success">搜索</button>
+    </form>
+
+    <form action="" method="post">
+    {% csrf_token %}
+        <select name="action" id="">
+
+            {% load mytag %}
+            {% show_info request %}
+            <option value="bulk_delete">批量删除</option>
+        </select>
+        <button class="btn btn-warning">go</button>
+
+    <table class="table table-bordered  table-striped table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>序号</th>
+            <th>qq号</th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>咨询课程</th>
+            <th>状态</th>
+            <th>销售</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for customer in all_customers %}
+                <tr>
+                    <td><input type="checkbox" name="cids" value="{{ customer.pk }}"></td>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ customer.qq }}</td>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.get_sex_display }}</td>
+                    <td>{{ customer.course }}</td>
+                    <td>{{ customer.get_status_display }}</td>
+                    <td>{{ customer.consultant|default:'暂无' }}</td>
+                    <td>
+                        <a href="{% url 'sales:editcustomer' customer.pk %}" > <i class="fa fa-edit fa-2x"></i> </a>
+{#                        <a href="{% url 'editcustomer' customer.pk %}?next={{request.get_full_path}}" > <i class="fa fa-edit fa-2x"></i>xx </a>#}
+                        <a href="{% reverse_url 'sales:editcustomer' customer.pk request %}" > <i class="fa fa-edit fa-2x"></i>xx </a>
+{#                        <a href="" > <i class="fa fa-remove"></i> </a>#}
+{#                        <a href="" class="btn btn-danger btn-sm">删除</a>#}
+                    </td>
+
+                </tr>
+
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+    </form>
+    {{ page_html }}
+
+
+{% endblock %}
+
+{% block js %}
+
+    <script>
+
+        var a = '{{ search_field }}';  // 'name__contains'
+        $('#search_field').val(a);
+
+    </script>
+
+{% endblock %}
+
+

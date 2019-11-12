@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LOGIN</title>
+</head>
+<body>
+{#Edition 1#}
+{#<form action="" method="post">#}
+{#    username: <input type="text" name="username">#}
+{#    password: <input type="text" name="password">#}
+{#    <button id="sub">SUBMIT</button>#}
+{#</form>#}
+
+{#Edition 2#}
+<form action="" method="post">
+    username: <input type="text" name="username" id="username">
+    password: <input type="text" name="password" id="password">
+    <button id="sub">SUBMIT</button>
+    <span class="error">{{ error }}</span>
+</form>
+</body>
+{#<script src="/static/js/jquery.js/"></script>#}
+<script src="{%  static 'js/jquery.js'   %}"></script>
+<script>
+    $("#sub").click(function(){
+        var username=$('#username').val();
+        var password=$('#password').val();
+
+
+        $.ajax({
+
+        type:'get', url:'{% url 'login' %}',
+        data:{username:username,password:password},
+        success:function(res){console.log(res);}
+        });
+
+        {#$.ajax({#}
+        {#url:'{% url 'login' %}',#}
+        {#type:'post',#}
+        {#data:{username:username,password:password},#}
+        {#success:function(res){#}
+        {#    if (res==='1'){location.href='/home/';}#}
+        {#    else{$('.error').text('Wrong Information!')}}})#}
+    })
+
+</script>
+</html>

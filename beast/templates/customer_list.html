@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+
+
+
+{% block content %}
+
+    <button class="btn btn-success"><a href="{% url 'customer_add' %}">添加</a></button>
+    {{ meun_data }}
+
+    <form action="" method="get">
+{#            {% csrf_token %}#}
+        <select name="select" id="">
+            <option value="qq__contains">qq</option>
+            <option value="name__contains">name</option>
+        </select>
+        <input type="text" name="keyword" value="{{ keyword|default:'' }}">
+        <input type="submit" value="SUBMIT">
+    </form>
+
+    <form action="" method="post">
+        {% csrf_token %}
+{#        {% load tag %}#}
+        <select name="action" id="action">
+            <option value="transgs">公转私</option>
+            <option value="tanssg">私转公</option>
+            <option value="bulkdel">批量删除</option>
+        </select>
+        <input type="submit" value="GO">
+    <table>
+        <tr>
+                        <th>#</th>
+                        <th>序号</th>
+                        <th>姓名</th>
+                        <th>年龄</th>
+                        <th>邮箱</th>
+                        <th>公司</th>
+                        <th>操作</th>
+        </tr>
+        {% for i in obj %}
+        <tr>
+            <td><input type="checkbox"  name='cid' value="{{ i.pk }}"></td>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.name }}</td>
+            <td>{{ i.age }}</td>
+            <td>{{ i.email }}</td>
+            <td>{{ i.company }}</td>
+            <td>
+                <button class="btn btn-waring"><a href="{% url 'customer_edit'  i.pk %}">编辑</a></button>
+                {% load tag %}
+{#                {% reverse_url 'customer_edit' i.pk request %}#}
+
+{#                <button class="btn btn-waring"><a href="{% reverse_url 'customer_edit' i.pk request %}">XX编辑</a></button>#}
+                <button class="btn btn-waring"><a href="{% reverse_url 'customer_edit' i.pk request %}">XX编辑</a></button>
+                <button class="btn btn-danger"><a href="{% url 'customer_del' i.pk %}">删除</a></button>
+                <button class="btn btn-waring"><a href="{% reverse_url 'customer_del' i.pk request %}">XX删除</a></button>
+
+
+
+{##}
+{#                {% edit_del 'customer_edita' i.pk request %}#}
+{#                {% edit_del 'customer_delete' i.pk request %}#}
+
+
+            </td>
+        </tr>
+        {% endfor  %}
+    </table>
+    </form>
+    {{ html }}
+
+{% endblock %}
+
+{% block js %}
+
+<script>
+
+{% endblock %}

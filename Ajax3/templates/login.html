@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LOGIN</title>
+</head>
+<body>
+
+{#<form action="" method="post">#}
+{#    {% csrf_token %}#}
+{#    用户名: <input type="text" name="username">#}
+{#    密码: <input type="password" name="password">#}
+{#    <input type="submit">#}
+{##}
+{#</form>#}
+
+    {% csrf_token %}
+
+    用户名: <input type="text" id="username">
+    密码: <input type="password" id="password">
+    <button id="sub">提交</button>
+    <span class="error"></span>
+
+</body>
+{#<script src="/static/js/jquery.js"></script>#}
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/jquery.cookie.js' %}"></script>
+
+<script>
+
+
+    $('#sub').click(function () {
+
+        var uname = $('#username').val();
+        var pwd = $('#password').val();
+
+        {#var csrf = $('[name=csrfmiddlewaretoken]').val();#}
+        var csrf = '{{ csrf_token }}';
+
+        // $.ajax({
+        {#//    url:'{% url "login" %}',#}
+        //    type:'get',
+        //    success:function (res) {
+        //        console.log(res);
+        //    }
+
+        //})
+
+        $.ajax({
+            url:'{% url "login" %}',
+            type:'post',
+            // data:{username:uname,password:pwd,csrfmiddlewaretoken:csrf},
+            data:{username:uname,password:pwd},
+            headers:{
+                "X-CSRFToken":$.cookie('csrftoken'),
+            },
+            success:function (res) {
+                console.log(res);
+                if (res === '1'){
+                    // $('.error').text('登录成功');
+                    location.href = '/home/'; // http://127.0.0.1:8000/home/
+
+                }else{
+                    $('.error').text('用户名密码错误!');
+                }
+
+            }
+
+        })
+
+    })
+
+
+
+</script>
+
+</html>

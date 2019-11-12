@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<!-- saved from url=(0063)http://www.jq22.com/demo/jquery-Sharelink20151012/register.html -->
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>注册丨Sharelink</title>
+    <link rel="stylesheet" href="{% static 'login/css/style.css' %}">
+{#    <link rel="stylesheet" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">#}
+</head>
+<body>
+<div class="register-container">
+    <h1>注册</h1>
+    <div class="connect">
+        <p style="left: 0%;">办个会员吧老弟</p>
+    </div>
+    <form action="" method="post" id="registerForm"
+          novalidate="novalidate">
+        {% csrf_token %}
+        <div>
+            {{ register_obj.username }}
+            <span style="color:red;">{{ register_obj.username.errors.0 }}</span>
+{#            <span class="text-danger"></span>#}
+        </div>
+        <div>
+            {{ register_obj.password }}
+{#            <span class="text-danger">{{ register_obj.password.errors.0 }}</span>#}
+            <span style="color:red;" >{{ register_obj.password.errors.0 }}</span>
+{#            <input type="password" name="password" class="password" placeholder="输入密码" oncontextmenu="return false"#}
+{#                   onpaste="return false">#}
+        </div>
+        <div>
+            {{ register_obj.confirm_password }}
+{#            <span class="text-danger">{{ register_obj.confirm_password.errors.0 }}</span>#}
+            <span style="color:red;">{{ register_obj.confirm_password.errors.0 }}</span>
+{#            <input type="password" name="confirm_password" class="confirm_password" placeholder="再次输入密码"#}
+{#                   oncontextmenu="return false" onpaste="return false">#}
+        </div>
+        <div>
+            {{ register_obj.telephone }}
+{#            <span class="text-danger">{{ register_obj.telephone.errors.0 }}</span>#}
+            <span style="color:red;">{{ register_obj.telephone.errors.0 }}</span>
+{#            <input type="text" name="phone_number" class="phone_number" placeholder="输入手机号码" autocomplete="off"#}
+{#                   id="number">#}
+        </div>
+        <div>
+            {{ register_obj.email }}
+{#            <span class="text-danger">{{ register_obj.email.errors.0 }}</span>#}
+            <span style="color:red;">{{ register_obj.email.errors.0 }}</span>
+{#            <input type="email" name="email" class="email" placeholder="输入邮箱地址" oncontextmenu="return false"#}
+{#                   onpaste="return false">#}
+        </div>
+        <button id="submit" type="submit">注 册</button>
+    </form>
+    <a href="{% url 'sales:login' %}">
+        <button type="button" class="register-tis">已经有账号？</button>
+    </a>
+</div>
+
+<script src="{% static 'login/js/jquery.min.js' %}"></script>
+{#<script src="./登陆丨Sharelink_files/jquery.min.js(1).下载"></script>#}
+<script src="{% static 'login/js/common.js' %}"></script>
+
+<script src="{% static 'login/js/supersized.3.2.7.min.js' %}"></script>
+<script src="{% static 'login/js/supersized-init.js' %}"></script>
+
+<script src="{% static 'login/js/jquery.validate.min.js' %}"></script>
+
+
+</body>
+</html>

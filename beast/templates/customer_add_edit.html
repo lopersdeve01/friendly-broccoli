@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+{#    <button class="btn btn-success"><a href="{% url 'customer_add' %}}">添加</a></button>#}
+
+    <form action="" method="post">
+        {% csrf_token %}
+
+        {% for i in obj %}
+        <tr>
+            {{i.label}}
+            {{i}}
+
+        </tr><span>{{ i.error.0 }}</span>
+
+        {% endfor %}
+        <input type="submit" value="提交">
+
+    </form>
+{% endblock %}
+

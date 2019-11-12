@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HOME</title>
+</head>
+<body>
+{#{{ obj.errors }}#}
+<form action="" method="post">
+{% csrf_token %}
+{#    <div>#}
+{#{{ obj.username.label }} {{ obj.username }} {{ obj.username.errors.0 }}#}
+{#    </div>#}
+{#   <div>#}
+{#        {{ obj.password.label }} {{ obj.password }} {{ obj.password.errors.0 }}#}
+{#   </div>#}
+{#    <div>#}
+{#        {{ obj.r_password.label }} {{ obj.r_password }} {{ obj.r_password.errors.0 }}#}
+{#   </div>#}
+
+        username: <input type="text" name="username">
+        password: <input type="password" name="password">
+        price: <input type="number" name="price">
+        publishDate: <input type="date" name="publishDate">
+        publish:
+        <select name="publish" id="">
+            {% for i in publish %}
+            <option value="{{ i.pk }}">{{ i.name }}</option>
+            {% endfor %}
+        </select>
+
+
+
+        author:
+        <select name="author" id="">
+            {% for j in author %}
+            <option value="{{ j.pk }}">{{ j.name }}</option>
+            {% endfor %}
+        </select>
+
+{##}
+{##}
+{#        <div>#}
+{#        {{ obj.sex.label }}{{ obj.sex }}#}
+{#    </div>#}
+{#    <div>#}
+{#        {{ obj.hobby.label }}{{ obj.hobby }}#}
+{#    </div>#}
+{##}
+{#    <div>#}
+{#        {{ obj.remember_me.label }}{{ obj.remember_me }}#}
+{#    </div>#}
+{##}
+{#    <div>#}
+{#         {{ obj.bday.label }}{{ obj.bday }}#}
+{#    </div>#}
+        <button class="btn btn-success pull-right">SUBMIT</button>
+{#        <input type="submit">#}
+</form>
+
+</body>
+</html>

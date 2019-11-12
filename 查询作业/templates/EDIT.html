@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ADD</title>
+    <link rel="stylesheet" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'sw/sweetalert.css' %}">
+</head>
+<body>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    Page of Edit
+  </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+                        {% csrf_token %}
+            <form action="" method="post">
+
+            <div class="form-group">
+                <label for="title">title</label>
+                <input type="text" class="form-control" id="title" placeholder="title" name="title" value="{{ book.title }}">
+              </div>
+            <div class="form-group">
+                <label for="price">price</label>
+                <input type="text" class="form-control" id="price" placeholder="price" name="price" value="{{ book.price }}">
+              </div>
+             <div class="form-group">
+                <label for="publishDate">publishDate</label>
+                <input type="date" class="form-control" id="publishDate" name="publishDate" value="{{ book.publishDate|date:'Y-m-d' }}">
+              </div>
+{#                press:#}
+{#                <select name="publish_id" >#}
+{#                 {% for j in publish %}#}
+{#                    <option value="{{ j.nid }}">{{j.name}}</option>#}
+{#                    {% endfor %}#}
+{#                </select>#}
+            <div class="form-group">
+                <label for="title">press</label>
+                    <select name="publish_id" id="publish" class="form-control">
+                        {% for j in publish %}
+                            {% if j == book.publishs %}
+                                <option value="{{ j.nid }}" selected>{{ j.name }}</option>
+                            {% else %}
+                                <option value="{{ j.nid }}">{{ j.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+
+                    </select>
+            </div>
+
+
+
+{#                authors:#}
+{#                <select name="author_id"  multiple>#}
+{#                    {% for i in author %}#}
+{#                    <option value="{{ i.nid }}">{{i.name}}</option>#}
+{#                    {% endfor %}#}
+{#                </select>#}
+            <div class="form-group">
+                <label for="title">authors</label>
+                <select name="authors" id="authors" multiple class="form-control">
+                        {% for i in author %}
+                            {% if i in book.authors.all %}
+                                <option value="{{ i.nid }}" selected>{{ i.name }}</option>
+                            {% else %}
+                                <option value="{{ i.nid }}">{{ i.name }}</option>
+                            {% endif %}
+
+                        {% endfor %}
+
+
+                    </select>
+              </div>
+
+
+                <button type="submit" class="btn btn-success pull-right">SUBMIT</button>
+            </form>
+        </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'sw/sweetalert.min.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+{% extends 'starter.html' %}
+
+
+
+{% block title %}
+    <h1>
+       跟进记录展示页面
+
+
+    </h1>
+  {% endblock %}
+
+
+{% block content %}
+{% load mytag %}
+
+<div class="container-fluid">
+    <a href="{% url 'sales:addConsultRecord' %}" class="btn btn-primary">添加跟进记录</a>
+    <form class="form-inline pull-right" action="" method="get">
+{#        {% csrf_token %}#}
+      <div class="form-group">
+          <select name="search_field" id="search_field" class="form-control">
+              <option value="customer__name__contains">姓名</option>
+
+          </select>
+
+          <input type="text" class="form-control" id="search-word" placeholder="请输入" name="keyword" value="{{ keyword|default:'' }}">
+      </div>
+      <button type="submit" class="btn btn-success">搜索</button>
+    </form>
+
+    <form action="" method="post">
+    {% csrf_token %}
+        <select name="action" id="">
+
+            <option value="bulk_delete">批量删除</option>
+        </select>
+        <button class="btn btn-warning">go</button>
+
+    <table class="table table-bordered  table-striped table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>序号</th>
+            <th>所咨询客户</th>
+            <th>跟进内容</th>
+            <th>跟进状态</th>
+            <th>跟进人</th>
+            <th>跟进日期</th>
+
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for record in all_records %}
+                <tr>
+                    <td><input type="checkbox" name="cids" value="{{ record.pk }}"></td>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ record.customer.name }}</td>
+                    <td>{{ record.note }}</td>
+                    <td>{{ record.get_status_display }}</td>
+                    <td>{{ record.consultant.username }}</td>
+                    <td>{{ record.date|date:'Y-m-d' }}</td>
+                    <td>
+
+                        <a href="{% reverse_url 'sales:editConsultRecord' record.pk request %}" > <i class="fa fa-edit fa-2x"></i> </a>
+
+                    </td>
+
+                </tr>
+
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+    </form>
+    {{ page_html }}
+
+
+{% endblock %}
+
+{% block js %}
+
+    <script>
+
+        var a = '{{ search_field }}';  // 'name__contains'
+        if (a!=='None'){
+            $('#search_field').val(a);
+        }
+
+
+    </script>
+
+{% endblock %}
+
+

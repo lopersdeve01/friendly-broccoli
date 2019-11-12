@@ -1,0 +1,95 @@
+{% extends 'starter.html' %}
+
+
+
+{% block title %}
+    <h1>
+         课程记录信息展示
+
+
+    </h1>
+  {% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+    <a href="" class="btn btn-primary">添加课程记录</a>
+    <form class="form-inline pull-right" action="" method="get">
+{#        {% csrf_token %}#}
+      <div class="form-group">
+          <select name="search_field" id="search_field" class="form-control">
+              <option value="qq__contains">qq</option>
+              <option value="name__contains">姓名</option>
+          </select>
+
+          <input type="text" class="form-control" id="search-word" placeholder="请输入" name="keyword" value="{{ keyword|default:'' }}">
+      </div>
+      <button type="submit" class="btn btn-success">搜索</button>
+    </form>
+
+    <form action="" method="post">
+    {% csrf_token %}
+        <select name="action" id="">
+            <option value="bulk_delete">批量删除</option>
+            <option value="bulk_create_studyrecords">批量生成学习记录</option>
+        </select>
+        <button class="btn btn-warning">go</button>
+
+    <table class="table table-bordered  table-striped table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+
+            <th>序号</th>
+            <th>节次</th>
+            <th>上课日期</th>
+            <th>本节课程标题</th>
+            <th>班级</th>
+            <th>讲师</th>
+            <th>学习记录</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for course_record in course_records %}
+                <tr>
+                    <td><input type="checkbox" name="cids" value="{{ course_record.pk }}"></td>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ course_record.day_num }}</td>
+                    <td>{{ course_record.date|date:'Y-m-d' }}</td>
+                    <td>{{ course_record.course_title }}</td>
+                    <td>{{ course_record.re_class }}</td>
+                    <td>{{ course_record.teacher.username }}</td>
+                    <td><a href="{% url 'sales:studyrecord' course_record.pk %}">学习记录详情</a></td>
+
+                    <td>
+                        <a href="" > <i class="fa fa-edit fa-2x"></i></a>
+                    </td>
+
+                </tr>
+
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+    </form>
+    {{ page_html }}
+
+
+{% endblock %}
+
+{% block js %}
+
+    <script>
+
+        var a = '{{ search_field }}';  // 'name__contains'
+        $('#search_field').val(a);
+
+    </script>
+
+{% endblock %}
+
+

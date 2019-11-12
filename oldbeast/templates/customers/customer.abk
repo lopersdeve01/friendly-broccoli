@@ -1,0 +1,55 @@
+{% extends 'start.html' %}
+
+  {% block title %}
+    <h1>
+        SCAN OF CUSTOMER_LIST
+        <small>customer details</small>
+      </h1>
+  {% endblock %}
+
+
+
+{% block content %}
+<div class="container-fluid">
+    <span>客户名单</span>
+    <div>财源</div>
+    <button class="btn btn-warning"><a href="{% url 'add' %}" >ADD</a> </button>
+    <div>
+        <form action="" method="post">
+        <table class="table table-bordered  table-striped table-hover">
+{#        <table>#}
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>QQ</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>电话</th>
+                    <th>咨询课程</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+        <tbody>
+            {% for i in obj %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.qq }}</td>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.sex }}</td>
+                    <td>{{ i.phone }}</td>
+                    <td>{{ i.course }}</td>
+                    <td>{{ i.status }}</td>
+                    <td>
+{#                        <button class="btn btn-success" ><a href="{% url 'edit' i.pk %}">EDIT</a></button>#}
+                        <button class="btn btn-success" ><a href="{% url 'edit' i.pk %}">EDIT<i class="fa fa-edit fa-2x"></i> </a></button>
+                        <button class="btn btn-danger" ><a href="{% url 'delete' i.pk %}">DELETE</a></button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+        </form>
+    </div>
+</div>
+{% endblock %}

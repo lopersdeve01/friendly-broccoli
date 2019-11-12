@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LOGIN</title>
+    <style>
+        .c1{
+            background-color:red;
+        }
+    </style>
+</head>
+<body>
+
+<h1> Page Of Login</h1>
+{{ obj.errors }}
+<form action=""  method="post" novalidate>
+          {% csrf_token %}
+
+    <div>{{ obj.username.label }} {{ obj.username }}
+        {{ obj.username.errors.0}}
+    </div>
+   <div>
+        {{ obj.password.label }} {{ obj.password }}
+       {{ obj.password.errors.0 }}
+   </div>
+    <div>
+        {{ obj.r_password.label }} {{obj.r_password }} {{ obj.r_password.errors.0 }}
+   </div>
+    <div>
+        {{ obj.sex.label }}{{ obj.sex }}
+    </div>
+    <div>
+        {{ obj.hobby.label }}{{ obj.hobby }}
+    </div>
+
+    <div>
+        {{ obj.remember_me.label }}{{ obj.remember_me }}
+    </div>
+
+    <div>
+        {{ obj.bday.label }}{{ obj.bday }}
+    </div>
+
+    <input type="submit">
+</form>
+
+
+</body>
+</html>
+
+
+
+
+{#    username: <input type="text" name="username">#}
+{#    password: <input type="password" name="password">#}
+{#    <p>sex: <input type="radio"  name="gender"> male#}
+{#            <input type="radio"  name="gender"> female</p>#}
+{#    <p>hobby:#}
+{#        <input type="checkbox" name="hobby">  drinking#}
+{#        <input type="checkbox" name="hobby">  smoking#}
+{#        <input type="checkbox" name="hobby">  hairstyle#}
+{#    </p>#}
+{#    <p>#}
+{#        remember_me:#}
+{#        <input type="checkbox" name="remember_me"> remember-me#}
+{#    </p>#}

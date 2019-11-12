@@ -1,0 +1,5 @@
+1: conversion failed: "北京" to int
+2: conversion failed: "北京" to int
+3: conversion failed: "上海" to int
+4: conversion failed: "北京" to int
+5: conversion failed: "广州" to int

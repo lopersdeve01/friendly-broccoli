@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HOME</title>
+
+    <link rel="stylesheet" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'sw/sweetalert.css' %}">
+</head>
+<body>
+<div><span>scan book_list</span></div>
+<a href="/add/" class="btn btn-primary" type="button">Add</a>
+
+{#<input type="button" value="add" id="add" href="/add/">#}
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Publish_date</th>
+                <th>Press</th>
+                <th>Author</th>
+                <th>Manipulate</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for i in book %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.title }}</td>
+            <td>{{ i.price }}</td>
+            <td>{{ i.publish_date|date:"Y-m-d" }}</td>
+            <td>{{ i.publish.name }}</td>
+            <td>
+                {% for j in i.author.all %}
+                      {{ j.name }}
+                {% if forloop.last %}
+                {% else %}
+                    ,
+                {% endif %}
+                {% endfor %}
+                {{ i.author.name }}
+            </td>
+
+            <td>
+                <a href="{% url 'edit' i.pk %}" class="btn btn-warning">EDIT</a>
+                <a href="{% url 'delete' i.pk %}" class="btn btn-danger">DELETE</a>
+{#                <a href="{% url 'deletebook' i.pk %}" class="btn btn-danger">DELETE</a>#}
+
+
+
+                <button  class="btn btn-warning editajax"  id="editajax" book_id="{{ i.pk }}"> AJAX+EDIT</button>
+                <button  class="btn btn-danger delajax" id="delajax"  book_id="{{ i.pk }}"> AJAX+DELETE</button>
+
+            </td>
+
+        </tr>
+                    {% endfor  %}
+
+
+        </tbody>
+
+    </table>
+</div>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'sw/sweetalert.min.js' %}"></script>
+
+
+<script>
+
+   $('.delajax').on('click',function(){
+       var ths=$(this);
+       console.log(ths);
+       swal({
+           title:'are you sure to delete?',
+           text:'the data may be lost!',
+           type:'warning',
+           showCancelButton:true,
+           confirmButtonClass:'btn-danger',
+           confirmButtonText:'delete',
+           cancelButtonText:'cancel',
+           closeOnConfirm:false,},
+           function(){
+           var book_id=ths.attr('book_id');
+           console.log(book_id);
+           $.ajax({
+               url:'/deletebook/' + book_id + '/',
+               type:'post',
+               data:{'book_id':book_id,'csrfmiddlewaretoken':'{{ csrf_token }}'},
+               success:function(data) {
+                   if (data.status === 1) {
+                       swal('Done','you can go now!', 'success');
+                       ths.parent().parent().remove();
+                   } else {
+                       swal('Failure', 'please try again!', 'error');
+                   }
+               }
+
+               })
+   });
+});
+
+
+</script>
+
+
+
+
+</body>
+</html>

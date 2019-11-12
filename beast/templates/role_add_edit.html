@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="luffy-container">
+        <form class="form-horizontal clearfix" method="post" novalidate>
+            {% csrf_token %}
+
+            {% for i in obj %}
+                <div class="form-group clearfix">
+                    <label class="col-sm-2 control-label">{{ i.label }}</label>
+                    <div class="col-sm-6">
+                        {{ i }} <span style="color:firebrick;">{{ i.errors.0 }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="form-group col-sm-12">
+                <div class="col-sm-6">
+                    <div class="col-sm-offset-3">
+                        <button type="submit" class="btn btn-primary">提 交</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

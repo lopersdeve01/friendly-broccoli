@@ -1,0 +1,225 @@
+import copy
+
+from sales import models
+from django.shortcuts import render,HttpResponse,redirect
+from django import forms
+from django.http import JsonResponse
+from utils.md5_func import md5_function
+from django.urls import reverse
+from sales import myforms
+from utils.page import DQPage
+from django.conf import settings
+from django.db.models import Q
+from django.views import View
+from django.utils.safestring import mark_safe
+# Create your views here.
+# 注销登录
+def logout(request):
+
+    request.session.flush()  #清cookie,删session
+    return redirect('sales:login')
+
+def login(request):
+    res_dict = {'status':None,'home':None,'msg':None}
+
+    if request.method == 'GET':
+        return render(request, 'login/login.html')
+    else:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user_objs = models.UserInfo.objects.filter(username=username,password=md5_function(password))
+        if user_objs:
+
+            # 保存当前用户名
+            request.session['username'] = username
+
+            res_dict['status'] = 1
+            res_dict['home'] = reverse('sales:home')
+            return JsonResponse(res_dict)
+
+        else:
+            res_dict['status'] = 0
+            res_dict['msg'] = '用户名或者秘密错误'
+            return JsonResponse(res_dict)
+
+
+class RegisterForm(forms.Form):
+    username = forms.CharField(
+        max_length=16,
+        min_length=4,
+        error_messages={
+            'max_length':'太长了',
+            'min_length':'太短了,你不行',
+            'required':'不能为空',
+        },
+        widget=forms.TextInput(attrs={'class':'username','placeholder':'您的用户名','autocomplete':'off'})
+    )
+
+    password = forms.CharField(
+        max_length=32,
+        error_messages={
+            'required': '不能为空',
+            'max_length': '不能太长',
+        },
+        widget=forms.PasswordInput(attrs={'class':'password','placeholder':'输入密码'
+            ,'oncontextmenu':'return false','onpaste':'return false'}),
+
+    )
+
+    confirm_password = forms.CharField(
+        max_length=32,
+        error_messages={
+            'required': '不能为空',
+            'max_length': '不能太长',
+        },
+        widget=forms.PasswordInput(attrs={'class': 'confirm_password', 'placeholder': '输入密码'
+            , 'oncontextmenu': 'return false', 'onpaste': 'return false'}),
+    )
+
+    telephone = forms.CharField(
+        max_length=11,
+        min_length=11,
+        error_messages={
+            'max_length': '不能太长,需11位',
+            'min_length': '不能太短,需11位',
+            'required':'不能为空'
+        },
+        widget=forms.TextInput(attrs={'class':'phone_number','placeholder':'输入手机号码','autocomplete':'off','id':'number'})
+
+    )
+
+    email = forms.EmailField(
+        error_messages={
+            'invalid': '必须是邮箱格式',
+            'required': '不能为空'
+        },
+        widget=forms.EmailInput(
+            attrs={ 'class': 'email', 'placeholder': '输入邮箱地址',
+                   'oncontextmenu': 'return false','onpaste': 'return false'})
+
+    )
+
+    def clean(self):
+        password = self.cleaned_data.get('password')
+        confirm_password = self.cleaned_data.get('confirm_password')
+        if password == confirm_password:
+            return self.cleaned_data
+
+        else:
+            self.add_error('confirm_password','两次密码不一致!')
+
+
+def register(request):
+    if request.method == 'GET':
+        register_obj = RegisterForm()
+        return render(request, 'login/register.html', {'register_obj':register_obj})
+    else:
+        register_obj = RegisterForm(request.POST)
+        if register_obj.is_valid():
+            register_obj.cleaned_data.pop('confirm_password')
+            md5_password = md5_function(register_obj.cleaned_data.get('password'))
+            register_obj.cleaned_data.update({'password':md5_password})
+            models.UserInfo.objects.create(
+                **register_obj.cleaned_data
+            )
+            return redirect('sales:login')
+        else:
+            return render(request, 'login/register.html', {'register_obj':register_obj})
+
+
+def home(request):
+    return render(request,'customer/home.html')
+
+
+class Customers(View):
+    def get(self,request):
+        print(request.get_full_path())  #/customers/?page=3
+        path = request.path
+        recv_data = copy.copy(request.GET)
+        current_page_number = request.GET.get('page')  # 当前页码
+        search_field = request.GET.get('search_field')  # 搜索条件
+        keyword = request.GET.get('keyword')  # 搜索数据   陈
+        if keyword:
+            q = Q()  # 实例化q对象
+            q.children.append([search_field, keyword])  #
+            all_customers = models.Customer.objects.filter(q)
+        else:
+            all_customers = models.Customer.objects.all()
+
+        if path == reverse('sales:customers'):
+            # 筛选所有公户的客户信息
+            tag = '1'
+            all_customers = all_customers.filter(consultant__isnull=True)
+        else:
+            tag = '0'
+            all_customers = all_customers.filter(consultant__username=request.session.get('username'))
+            # all_customers = all_customers.filter(consultant__username=当前登录用户对象的user info表里面的记录的用户名)
+
+        total_count = all_customers.count()
+        per_page_count = settings.PER_PAGE_COUNT
+        page_number_show = settings.PAGE_NUMBER_SHOW
+        page_obj = DQPage(current_page_number, total_count, per_page_count, page_number_show, recv_data)
+        all_customers = all_customers[page_obj.start_data_number:page_obj.end_data_number]
+        page_html = page_obj.page_html_func()
+        return render(request, 'customer/customers.html',
+                      {'tag': tag, 'all_customers': all_customers, 'page_html': page_html, 'keyword': keyword,
+                       'search_field': search_field})
+    def post(self,request):
+        action = request.POST.get('action')
+        cids = request.POST.getlist('cids')  # 选中的客户的
+
+        customer_list = models.Customer.objects.filter(id__in=cids)
+
+        if hasattr(self,action):
+            ret = getattr(self,action)(request,customer_list)
+            if ret:
+                return ret
+            else:
+                return redirect(request.path)
+        else:
+            return HttpResponse('你的方法不对!!')
+    def bulk_delete(self,request,customer_list):
+        customer_list.delete()
+        return redirect(request.path)
+
+    def reverse_gs(self,request,customer_list):
+        user_obj = models.UserInfo.objects.get(username=request.session.get('username'))
+        customer_list.update(consultant_id=user_obj.id)
+
+    def reverse_sg(self,request,customer_list):
+        customer_list.update(consultant=None)
+
+
+def addEditCustomer(request,n=None):
+    old_obj = models.Customer.objects.filter(pk=n).first()
+    label  = '编辑页面' if n else '添加页面'
+
+
+    if request.method == 'GET':
+
+        book_form_obj = myforms.CustomerModelForm(instance=old_obj)
+        return render(request, 'customer/editcustomer.html', {'book_form_obj': book_form_obj,'label':label})
+
+    else:
+
+        next_path = request.GET.get('next')  #
+        print(next_path) # http://127.0.0.1:8000/editcustomer/116/?next=/customers/?search_field=qq__contains&keyword=1&page=4
+        # /customers/?search_field=qq__contains
+        # /customers/?search_field=qq__contains&keyword=1&page=4
+        book_form_obj = myforms.CustomerModelForm(request.POST,instance=old_obj)
+
+        if book_form_obj.is_valid():
+            book_form_obj.save()
+            return redirect(next_path)  # 'customer/?page=3'
+            # return redirect('customers')  #'customer/?page=3'
+        else:
+            return render(request, 'customer/editcustomer.html', {'book_form_obj': book_form_obj,'label':label})
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ADD</title>
+    <link rel="stylesheet" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'sw/sweetalert.css' %}">
+</head>
+<body>
+<div class="panel panel-default">
+  <div class="panel-body">
+    Page of Add
+  </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <form action="" method="post">
+
+                {% csrf_token %}
+
+                {% for i in book %}
+                            <div class="form-group">
+                                {{ i.label }}
+                                {{ i }}
+                            <span class="text-danger">{{ i.errors.0 }}</span>
+                            </div>
+                {% endfor %}
+
+
+{#            <form action="" method="post">#}
+{#                title: <input type="text" name="title">#}
+{#            <div class="form-group">#}
+{#                <label for="title">title</label>#}
+{#                <input type="text" class="form-control" id="title" placeholder="title" name="title">#}
+{#                {{ book.title.label }} {{ book.title }}#}
+{#              </div>#}
+{#                price: <input type="number" name="price">#}
+{#               <div class="form-group">#}
+{#                                   {{ book.price.label }} {{ book.price }}#}
+{#                <label for="price">price</label>#}
+{#                <input type="text" class="form-control" id="price" placeholder="price" name="price">#}
+{#              </div>#}
+{#                publishDate: <input type="date" name="publishDate">#}
+{#                <div class="form-group">#}
+{#                                                       {{ book.publishDate.label }} {{ book.publishDate }}#}
+{#                <label for="publishDate">publishDate</label>#}
+{#                <input type="date" class="form-control" id="publishDate" name="publishDate">#}
+{#              </div>#}
+{#                publish:#}
+{#                <select name="publish_id" id="">#}
+{#                 {% for j in publish %}#}
+{#                    <option value="{{ j.pk }}">{{j.name}}</option>#}
+{#                    {% endfor %}#}
+{#                </select>#}
+{##}
+{#                <div class="form-group">#}
+{#                                                   {{ book.publishs.label }} {{ book.publishs }}#}
+{#                <label for="title">press</label>#}
+{#                    <select name="publish_id" id="publish" class="form-control">#}
+{#                        {% for j in publish %}#}
+{#                            <option value="{{ j.nid }}">{{ j.name }}</option>#}
+{#                        {% endfor %}#}
+{#                    </select>#}
+{#              </div>#}
+{#                authors:#}
+{#                <select name="author_id" id="" multiple>#}
+{#                    {% for i in author %}#}
+{#                    <option value="{{ i.pk }}">{{i.name}}</option>#}
+{#                    {% endfor %}#}
+{#                </select>#}
+{##}
+{#            <div class="form-group">#}
+{#                                               {{ book.authors.label }} {{ book.authors }}#}
+{#                <label for="title">author</label>#}
+{#                <select name="authors" id="authors" multiple class="form-control">#}
+{#                        {% for i in author %}#}
+{#                            <option value="{{ i.nid }}">{{ i.name }}</option>#}
+{#                        {% endfor %}#}
+{#                    </select>#}
+{#              </div>#}
+{##}
+{#                <input type="submit" value="submit">#}
+            <button type="submit" class="btn btn-success pull-right addajax">SUBMIT</button>
+            </form>
+        </div>
+    </div>
+</div>
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'sw/sweetalert.min.js' %}"></script>
+</body>
+</html>

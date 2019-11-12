@@ -1,0 +1,96 @@
+{% extends 'starter.html' %}
+
+
+
+{% block title %}
+    <h1>
+         学习记录展示
+
+    </h1>
+  {% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+{#    <a href="" class="btn btn-primary">添加报名信息</a>#}
+    <form class="form-inline pull-right" action="" method="get">
+{#        {% csrf_token %}#}
+      <div class="form-group">
+          <select name="search_field" id="search_field" class="form-control">
+              <option value="qq__contains">qq</option>
+              <option value="name__contains">姓名</option>
+          </select>
+
+          <input type="text" class="form-control" id="search-word" placeholder="请输入" name="keyword" value="{{ keyword|default:'' }}">
+      </div>
+      <button type="submit" class="btn btn-success">搜索</button>
+    </form>
+
+    <form action="" method="post">
+    {% csrf_token %}
+{#        <select name="action" id="">#}
+{#            <option value="bulk_delete">批量删除</option>#}
+{#        </select>#}
+{#        <button class="btn btn-warning">go</button>#}
+
+    <table class="table table-bordered  table-striped table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>序号</th>
+            <th>考勤</th>
+
+            <th>本节成绩</th>
+            <th>作业批语</th>
+            <th>某节课程</th>
+            <th>学员</th>
+
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for study_record in all_study_records %}
+                <tr>
+                    <td><input type="checkbox" name="cids" value="{{ enrollment.pk }}"></td>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ study_record.get_attendance_display }}</td>
+                    <td>{{ study_record.score }}</td>
+                    <td>{{ study_record.homework_note }}</td>
+                    <td>{{ study_record.course_record }}</td>
+                    <td>{{ study_record.student.name }}</td>
+
+                    <td>
+{#                        <a href="{% url 'sales:editcustomer' customer.pk %}" > <i class="fa fa-edit fa-2x"></i> </a>#}
+{#                        <a href="{% url 'editcustomer' customer.pk %}?next={{request.get_full_path}}" > <i class="fa fa-edit fa-2x"></i>xx </a>#}
+                        <a href="" > <i class="fa fa-edit fa-2x"></i></a>
+{#                        <a href="" > <i class="fa fa-remove"></i> </a>#}
+
+                    </td>
+
+                </tr>
+
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+    </form>
+    {{ page_html }}
+
+
+{% endblock %}
+
+{% block js %}
+
+    <script>
+
+        var a = '{{ search_field }}';  // 'name__contains'
+        $('#search_field').val(a);
+
+    </script>
+
+{% endblock %}
+
+

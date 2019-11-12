@@ -1,0 +1,270 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HOME</title>
+    <link rel="stylesheet" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'sw/sweetalert.css' %}">
+
+    <style>
+        .shadow{
+            width:100%;
+            height:657px;
+            background-color:black;
+            margin:0;
+            opacity:0.8;
+            z-index:100;
+            position:fixed;
+        }
+        .content{
+            height:600px;
+            width:1000px;
+            background-color:white;
+            background-position:center center;
+            margin-left:200px;
+            margin-top:25px;
+            z-index:99;
+            position:fixed;
+        }
+
+        {#.c1{#}
+        {#    width:500px;#}
+        {#    height:600px;#}
+        {#    background-color:red;}#}
+        .hide{
+            display:none;
+        }
+        {#.author{#}
+        {#    display:none;#}
+        {#}#}
+    </style>
+
+
+</head>
+<body>
+{#<div class="c1"></div>#}
+<div class="shadow  hide">
+    <div class="content hide">
+         <div class="panel panel-default">
+            <div class="panel-body">
+                Page of Edit
+            </div>
+          </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <form action="" method="post">
+                                {% csrf_token %}
+                    <div class="form-group">
+                        <label for="title1">title</label>
+                        <input type="text" class="form-control" id="title1" placeholder="title" name="title" value="{{ bookn.title }}">
+                      </div>
+                    <div class="form-group">
+                        <label for="price1">price</label>
+                        <input type="text" class="form-control" id="price1" placeholder="price" name="price" value="{{ bookn.price }}">
+                      </div>
+                     <div class="form-group">
+                        <label for="publishDate1">publishDate</label>
+                        <input type="date" class="form-control" id="publishDate1" name="publishDate" value="{{ bookn.publishDate|date:'Y-m-d' }}">
+                      </div>
+                    <div class="form-group">
+                        <label for="publish1">press</label>
+                            <select name="publish_id" id="publish1" class="form-control">
+                                {% for j in publish %}
+                                    {% if j == bookn.publishs %}
+                                        <option value="{{ j.nid }}" selected>{{ j.name }}</option>
+                                    {% else %}
+                                        <option value="{{ j.nid }}">{{ j.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="authors1">authors</label>
+                        <select name="authors" id="authors1" multiple class="form-control">
+                                {% for i in author %}
+                                    {% if i in bookn.authors.all %}
+                                        <option value="{{ i.nid }}" selected>{{ i.name }}</option>
+                                    {% else %}
+                                        <option value="{{ i.nid }}">{{ i.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                      </div>
+                        <button type="submit" class="btn btn-success pull-right">SUBMIT</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="c2">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        Scan of Booklist
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-16 col-md-offset-0">
+                <a href="/add/" class="btn btn-primary">ADD</a>
+                <table class="table table-hover table-striped table-bordered">
+
+                <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Title</th>
+                    <th>Price</th>
+                    <th>Publish_date</th>
+                    <th>Press</th>
+                    <th>Author</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i in book %}
+                <tr>
+
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.title }}</td>
+                    <td>{{ i.price }}</td>
+                    <td>{{ i.publishDate|date:'Y-m-d' }}</td>
+                    <td>{{ i.publish}}
+                        <input type="hidden" id='publish' value="{{ i.publish.nid }}">
+                        </td>
+                    <td>{% for j in i.authors.all %}
+                        {{j.name}}
+                        <input type="hidden"  id='author' value="{{ j.nid }}">
+                        {% if forloop.last %}
+
+                        {% else %}
+                        ,
+                        {% endif %}
+
+                        {% endfor %}
+                     <select name="select" id="" class="author">
+                        {% for j in i.authors.all %}
+                            <option value="{{ j.pk }}">{{ j.name }}</option>
+                            {% endfor %}
+                        </select>
+
+
+                        </td>
+                    <td>
+                    <a  href='{% url 'edit'  i.pk %}'   class="btn btn-success" >EDIT</a>
+                    <a  href='{% url 'delete'  i.pk %}' class="btn btn-danger" >DELETE</a>
+
+                    <button  class="btn btn-success editajax"  nid='{{ i.pk }}' >AJAX+EDIT</button>
+                    <button  class="btn btn-danger  delajax"  nid='{{ i.pk }}' >AJAX+DELETE</button>
+
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'sw/sweetalert.min.js' %}"></script>
+
+
+    <script>
+      $('.delajax').click(function(){
+       var ths=$(this);
+       var nid=ths.attr('nid');
+       $.ajax({
+               url:'/delete/' + nid + '/',
+               type:'post',
+               data:{'nid':nid,'csrfmiddlewaretoken':'{{ csrf_token }}'},
+               success:function (data) {
+                   console.log(data);
+                   if (data.status === 1) {
+                       console.log(ths.parent().parent());
+                       ths.parent().parent().remove();
+                       {#location.href = '/home/';#}
+                   }}
+       });});
+
+      $('.editajax').click(function() {
+          var ths = $(this);
+          console.log(ths.val());
+          console.log(typeof(ths));
+          var nid = ths.attr('nid');
+          $('.shadow').removeClass('hide');
+          $('.content').removeClass('hide');
+          var title=$(ths.parent().parent().children(["1"])["1"]).text();
+          var price=$(ths.parent().parent().children(["1"])["2"]).text();
+          var publishDate=$(ths.parent().parent().children(["1"])["3"]).text();
+          var publish=$(ths.parent().parent().children(["1"])["4"]).text();
+          var publish_id=$(ths.parent().prev().prev().find('input')).val();
+          {#var publish_id=$(ths.parent().parent().children(["1"])["4"]).text();#}
+          {#var publish_id=$('#publish').value;#}
+          {#var publish_id=$(ths.parent().parent().children(["1"])["4"]).value;#}
+          var authors=$(ths.parent().prev().find('input')).val();
+          {#var authors_name=$(ths.parent().prev().find('input')).text();#}
+          var author_list=$(ths.parent().prev().find('option')).val();
+          {#var authors_obj=$(ths.parent().prev().find('input'));#}
+          {#var authors=[];#}
+          {#for ( i in authors_obj ){ authors += i.val()+","; }#}
+{#          authors_obj.each(function() { authors += each.val() + ',' });#}
+          {#var authors=$('#author').value;#}
+
+          console.log(title);
+          console.log(price);
+          console.log(publishDate);
+          console.log(publish);
+          {#console.log(typeof(ths.parent().prev().prev()));#}
+          {#console.log(typeof(ths.parent().prev().prev().find('input')));#}
+          {#console.log(typeof(ths.parent().prev().prev().find('input')));#}
+          {#console.log(typeof($(ths.parent().prev().prev().find('input'))).val());#}
+          {##}
+          {#console.log(typeof(ths.parent().prev().prev().find('input').val()));#}
+          {#console.log(typeof(publish_id));#}
+          {#console.log(typeof(authors));#}
+          console.log(publish_id);
+          console.log(authors);
+          console.log(author_list);
+          {#console.log(authors_name);#}
+          $('#title1').val(title);
+          {#console.log(typeof($('#title1')));#}
+          {#console.log($('#title1').val());#}
+
+          $('#price1').val(price);
+          $('#publishDate1').val(publishDate);
+          $('#publish1').val(publish_id);
+          $('#authors1').val(authors);
+           $.ajax({
+
+               url:'/edit/' + nid + '/',
+               type:'post',
+               data:{'nid':nid,'csrfmiddlewaretoken':'{{ csrf_token }}'},
+               success:function(data){
+                   if (data.obj){
+                       var title2=$('#title').val();
+                       var price2=$('#price2').val();
+                       var publishDate2=$('#publishDate').val();
+                       var pubilsh_id2=$('#publish').val();
+                       var authors2=$('#author').val();
+
+                       title.text(title2);
+                       price.text(price2);
+                       publishDate.text(publishDate2);
+                       publish_id.val(pubilsh_id2);
+                       authors.val(authors2); }
+                   else{ location.href=data.home }}})
+           });
+
+
+   </script>
+
+
+
+</body>
+</html>

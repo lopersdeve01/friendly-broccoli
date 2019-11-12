@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LOGIN</title>
+    <link rel="stylesheet" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'sw/sweetalert.css' %}">
+</head>
+<body>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    Page of Login
+  </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <form action="" method="post">
+
+                {% csrf_token %}
+
+{#            username: <input type="text" name="username">#}
+{#            password: <input type="password" name="password">#}
+{#            <input type="submit">#}
+                <div class="form-group">
+                <label for="username">username</label>
+                <input type="text" class="form-control" id="username" placeholder="username" name="username" value="username">
+              </div>
+            <div class="form-group">
+                <label for="price">password</label>
+                <input type="password" class="form-control" id="password" placeholder="password" name="password" value="password">
+              </div>
+
+            <button type="submit" class="btn btn-success pull-right">SUBMIT</button>
+                <span>{{ error }}</span>
+
+
+</form>
+
+
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'sw/sweetalert.min.js' %}"></script>
+
+</body>
+</html>

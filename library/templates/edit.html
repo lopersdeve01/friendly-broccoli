@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EDIT</title>
+    <link rel="stylesheet" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'sw/sweetalert.css' %}">
+    <style>
+        .c1{
+            height:600px;
+            background-color:blue;
+        }
+    </style>
+
+</head>
+<body>
+<h1>EDIT BOOKS</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+
+            <form action="" method="post">
+              <div class="form-group">
+                <label for="title">title</label>
+                <input type="text" class="form-control" id="title" placeholder="title" name="title" value="{{ obj.title }}">
+              </div>
+              <div class="form-group">
+                <label for="price">price</label>
+                <input type="number" class="form-control" id="price" placeholder="price" name="price" value="{{ obj.price }}">
+              </div>
+               <div class="form-group">
+                <label for="publish_date">publish_date</label>
+                <input type="date" class="form-control" id="publish_date" placeholder="publish_date" name="publish_date" value="{{ obj.publish_date|date:'Y-m-d' }}">
+              </div>
+
+
+                <div class="form-group">
+                <label for="publish">press</label>
+                <select  name='publish' id="publish" multiple  class="form-control" >
+                    {% for k in publish %}
+                        <option value="{{ k.id }}">{{ k.name }}</option>
+                        {% endfor %}
+                </select>
+              </div>
+
+                <div class="form-group">
+                <label for="author">author</label>
+                <select  name='author' id="author" multiple  class="form-control" >
+                    {% for j in author %}
+                        <option value="{{ j.id }}">{{ j.name }}</option>
+                        {% endfor %}
+                </select>
+              </div>
+
+              <button type="submit" class="btn btn-success pull-right">SUBMIT</button>
+              <input type="button" value="CANCEL" id="cancel">
+            </form>
+
+
+        </div>
+
+    </div>
+</div>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'sw/sweetalert.min.js' %}"></script>
+<script>
+
+       $.ajax({
+  url: "/cookie_ajax/",
+  type: "POST",
+  data: {
+    "username": "donald",
+    "password": 1946,
+    "csrfmiddlewaretoken":'{{ csrf_token }}'  // 使用jQuery取出csrfmiddlewaretoken的值，拼接到data中
+  },
+  success: function (data) {
+    console.log(data);
+  }
+})
+
+</script>
+</body>
+</html>

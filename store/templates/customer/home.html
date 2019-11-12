@@ -1,0 +1,38 @@
+{% extends 'starter.html' %}
+
+{% block username %}
+    <span class="hidden-xs">{{ username }}</span>
+{% endblock %}
+
+
+  {% block username1  %}
+<p>
+ {{ username }} - Web Developer
+  <small>{{ time }}</small>
+</p>
+  {% endblock %}
+
+  {% block username2  %}
+<p>
+  {{ username }} - Web Developer
+  <small>{{ time }}</small>
+</p>
+  {% endblock %}
+
+{#{% include 'plugin.html' %}#}
+
+
+
+
+
+{% block content %}
+
+<h1>
+    欢迎来到客户关系管理系统
+</h1>
+
+{% endblock %}
+
+
+
+

@@ -1,0 +1,18 @@
+{% block content %}
+    <span>客户信息</span>
+    <div>财源</div>
+    <div>
+        <form action=""   method="post" class="form-horizontal">
+            <div class="form-group">
+
+                {% for  i  in  obj %}
+                <div class="col-sm-10">  {{ i.label }}   {{ i }} <span>{{ i.error.0 }}</span></div>
+                {%  endfor  %}
+                <button class="btn btn-success">SUBMIT</button>
+
+            </div>
+        </form>
+    </div>
+    </div>
+
+{% endblock %}

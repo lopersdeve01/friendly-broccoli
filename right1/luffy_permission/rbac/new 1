@@ -1,0 +1,53 @@
+if obj:
+	request.session['is_login']=True
+	request.session['username']= username
+	ret=models.Role.objects.filter(userinfo__username=username).values('permissions__url','permissions__title','permissions__parents','permissions__reverse_name',
+	'permissions__menus__pk','permissions__menus__name', 'permissions__menus__icon','permissions__menus__weight').distinct()
+	request.session['ret']=list(ret)
+	print(ret) 
+	menu_data={}
+		for i in ret:
+			if i.get('permissions__menus__pk') in menu_data:
+				k = i.get('permissions__menus__pk')
+				# print(i.get('permissions__menus__pk'),i.get('permissions__url'))
+				# print(k)
+				# print({'title':i.get('permissions__title'),'url':i.get('permissions__url')})
+				menu_data[k]['children'].append({'title':i.get('permissions__title'),'url' :i.get('permissions__url'),
+												 'parents_id':i.get('permissions__parents_id'),'reverse_name':i.get('permissions_reverse_name')})
+
+			else:
+				k = i.get('permissions__menus__pk')
+				menu_data[k] = {
+					'name': i.get('permissions__menus__name'),
+					'icon': i.get('permissions__menus__icon'),
+					'weight': i.get('permissions__menus__weight'),
+					'children': [
+						{'title': i.get('permissions__title'), 'url': i.get('permissions__url'),
+						 'parents_id': i.get('permissions__parents_id'),
+						 'reverse_name': i.get('permissions_reverse_name')},
+					],
+				}
+				# print(11)
+				# print(i.get('permissions__menus__name'))
+				# print(22)
+				# menu_data[k]['name']=i.get('permissions__menus__name') # keyError 找不到key为1的值，无法进行迭代添加子字典值
+				# menu_data[k]['icon']=i.get('permissions__menus__icon')
+				# menu_data[k]['weight'] = i.get('permissions__menus__weight')
+				# menu_data[k]['children'].append({'title': i.get('permissions__title'),
+				#                             'url': i.get('permissions__url')})
+		print(menu_data)
+
+		# 排序
+		menu_dict=OrderedDict()
+		menu_list=sorted(menu_data,key=lambda x:menu_data[x]['weight'],reverse=True)
+		# 按照menu_data的键中的weight对字典的键进行排序，返回字典键的列表
+		print(menu_list)
+		for key in menu_list:
+			menu_dict[key]=menu_data[key]
+		# print(menu_dict)
+		request.session['menu_dict']=menu_dict
+		# 根据列表中字典间的顺序，对字典的进行排序，形成有序字典，并封装到session中
+		# print(menu_data)
+		return redirect('index')
+else:
+	return redirect('/login/')

@@ -1,0 +1,89 @@
+{% extends 'starter.html' %}
+
+
+{% block username %}
+    <span class="hidden-xs">{{ username }}</span>
+{% endblock %}
+
+
+  {% block username1  %}
+<p>
+ {{ username }} - Web Developer
+  <small>{{ time }}</small>
+</p>
+  {% endblock %}
+
+  {% block username2  %}
+<p>
+  {{ username }} - Web Developer
+  <small>{{ time }}</small>
+</p>
+  {% endblock %}
+
+    <section class="content-header">
+      {% block title %}
+        <h1>
+           学习记录
+            <small>学习详情</small>
+          </h1>
+          <button type=""><a href="{% url 'sales:addstudyrecords' %}">添加学习记录</a></button>
+      {% endblock %}
+
+{% block content %}
+
+    <form class="form-inline pull-right" action="" method="get">
+{#        {% csrf_token %}#}
+      <div class="form-group">
+          <select name="search_field" id="search_field" class="form-control">
+              <option value="course_record__course_title__contains">课程</option>
+              <option value="student__name__contains">姓名</option>
+              <option value="score">成绩</option>
+          </select>
+
+          <input type="text" class="form-control" id="search-word" placeholder="请输入" name="keyword" value="{{ keyword|default:'' }}">
+      </div>
+      <button type="submit" class="btn btn-success">搜索</button>
+    </form>
+    <form action="" method="post">
+        {% csrf_token %}
+            <select name="" id="">
+                  <option value="1">批量删除</option>
+            </select>
+            <button class="btn btn-warning">提交</button>
+        <table class="table table-bordered  table-striped table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>序号</th>
+                <th>学员</th>
+                <th>课程</th>
+                <th>本节成绩</th>
+                <th>考勤</th>
+                <th>日期</th>
+                <th>操作</th>
+            </tr>
+
+            </thead>
+            <tbody>
+
+            {% for i in obj %}
+            <tr>
+                <td><input type="checkbox" name='mark' value="{{ i.pk }}"></td>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.student.name }}</td>
+                <td>{{ i.course_record.course_title }}</td>
+                <td>{{ i.score }}</td>
+                <td>{{ i.attendece }}</td>
+                <td>{{ i.date|date:'Y-m-d' }}</td>
+                <td>
+                    <a  class="fa fa-1x fa-edit" href="{% url 'sales:editstudyrecords' i.pk %}" >EDIT</a>
+                    <a  class="btn btn-danger"  href="{% url 'sales:deletestudyrecords' i.pk %}">DELETE</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+
+    </form>
+{% endblock %}

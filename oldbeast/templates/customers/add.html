@@ -1,0 +1,65 @@
+{% extends 'start.html' %}
+
+{% block title %}
+    <h1>
+        ADD CUSTOMER
+        <small>customer details</small>
+      </h1>
+  {% endblock %}
+
+{% block content %}
+    <span>客户信息</span>
+    <div>财源</div>
+    <div>
+        <form action=""   method="post">
+            {% for  i in  obj %}
+            <div class="form-group">
+                <div class="col-sm-10">{{ i.label }}   {{ i }} <span>{{ i.error.0 }}</span></div>
+{#            <div>  {{ i.name.label }}   {{ i.name }}<span>{{ i.name.error.0 }}</span></div>#}
+{#            <div>   {{ i.sex.label }}  {{ i.sex }}<span>{{ i.sex.error.0 }}</span></div>#}
+{#            <div>   {{ i.phone.label }} {{ i.phone }}<span>{{ i.phone.error.0 }}</span></div>#}
+{#            <div>  {{ i.course.label }}  {{ i.course }}<span>{{ i.course.error.0 }}</span></div>#}
+{#            <div>   {{ i.status.label }} {{ i.status }}<span>{{ i.status.error.0 }}</span></div>#}
+                </div>
+            {% endfor  %}
+            <button class="btn btn-success">SUBMIT</button>
+
+        </form>
+{#    <table>#}
+{#    <thead>#}
+{#    <tr>#}
+{#        <th>序号</th>#}
+{#        <th>QQ</th>#}
+{#        <th>姓名</th>#}
+{#        <th>性别</th>#}
+{#        <th>电话</th>#}
+{#        <th>咨询课程</th>#}
+{#        <th>状态</th>#}
+{#        <th>操作</th>#}
+{#    </tr>#}
+{#    </thead>#}
+{#    <tbody>#}
+{#    {% for i in obj %}#}
+{#    <tr>#}
+{#        <td>{{ forloop.counter }}</td>#}
+{#        <td>{{ i.qq }}</td>#}
+{#        <td>{{ i.name }}</td>#}
+{#        <td>{{ i.sex }}</td>#}
+{#        <td>{{ i.phone }}</td>#}
+{#        <td>{{ i.course }}</td>#}
+{#        <td>{{ i.status }}</td>#}
+{#            <td><button class="btn btn-success" value="{{ i.pk }}">EDIT</button>#}
+{#                <button class="btn btn-danger" value="{{ i.pk }}">DELETE</button>#}
+{#            </td>#}
+{#    </tr>#}
+{#    {% endfor %}#}
+{##}
+{#    </tbody>#}
+{##}
+{##}
+{##}
+{##}
+{#    </table>#}
+{#    </div>#}
+
+{% endblock %}

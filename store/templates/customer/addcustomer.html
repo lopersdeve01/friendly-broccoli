@@ -1,0 +1,41 @@
+{% extends 'starter.html' %}
+
+{% block username %}
+    <span class="hidden-xs">{{ username }}</span>
+{% endblock %}
+
+
+  {% block username1  %}
+<p>
+ {{ username }} - Web Developer
+  <small>{{ time }}</small>
+</p>
+  {% endblock %}
+
+  {% block username2  %}
+<p>
+  {{ username }} - Web Developer
+  <small>{{ time }}</small>
+</p>
+  {% endblock %}
+
+
+
+
+
+{% block title %}
+    <h1>添加客户页面</h1>
+{% endblock %}
+
+
+{% block content %}
+
+
+    {% include 'customer/add_edit_mode.html' %}
+
+
+{% endblock %}
+
+
+
+

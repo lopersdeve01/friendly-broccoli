@@ -1,0 +1,51 @@
+{% extends 'starter.html' %}
+
+
+{% block username %}
+    <span class="hidden-xs">{{ username }}</span>
+{% endblock %}
+
+
+  {% block username1  %}
+<p>
+ {{ username }} - Web Developer
+  <small>{{ time }}</small>
+</p>
+  {% endblock %}
+
+  {% block username2  %}
+<p>
+  {{ username }} - Web Developer
+  <small>{{ time }}</small>
+</p>
+  {% endblock %}
+
+
+    <section class="content-header">
+      {% block title %}
+        <h1>
+            {{ label }}
+            <small>详细信息</small>
+          </h1>
+      {% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for i in obj %}
+                    <div class="form-group">
+                        {{ i.label }}
+                        {{ i }}
+                    <span class="text-danger">{{ i.errors.0 }}</span>
+                    </div>
+        {% endfor %}
+        <input  class='btn btn-success' type="submit" value="提交">
+    </form>
+{% endblock %}
+
+
+
+    {% block js %}
+
+
+    {% endblock %}
