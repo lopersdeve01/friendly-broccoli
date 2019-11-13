@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from rest_framework.filters import BaseFilterBackend
 
 
+from django.db.models import F,Count
+
 import uuid
 
 
@@ -282,21 +284,63 @@ class Add_Article(CreateAPIView):
     Articledetails_serializer_class=[Articledetails,]
     def perform_create(self, serializer):
         serializer.save()
-class SingleAritcle(RetrieveAPIView,UpdateAPIView,DestroyAPIView):
-    filter_backends = [SingleFilterBackend, ]
+class SingleAritcle(RetrieveAPIView,UpdateAPIView,DestroyAPIView):  # 注意此时查看单条评论不需要提供认证级登录，但是其他功能，
+    # 例如更新与删除时需要作者才有权限去操作，所以需要认证，不能为空。此时需要加上方法判断条件
 
-    queryset= models.Article.objects.all()
+
+    # def get(self,request,*args,**kwargs):
+        # result=super().get(request,*args,**kwargs)
+        # pk=kwargs.get('pk')
+        # models.Article.objects.filter(pk=pk).update(read_count=F('read_count')+1)
+        # return result
+
+        # result=super().get(request,*args,**kwargs)
+        # instance=self.get_object()   # 获取到当前对象，此时url中带有参数
+        # print(instance)
+        # instance.read_count+=1
+        # instance.save()
+        # return result
+    queryset = models.Article.objects.all()
+    filter_backends = [SingleFilterBackend,]
+    serializer_class = PageViewArticleSerializer
+    def get_authenticators(self):
+        if self.request.method=="GET":
+            authentication_classes = []
+            permission_classes = []
+
+
+class CommentView(CreateAPIView,UpdateAPIView,DestroyAPIView,RetrieveAPIView):
     serializer_class = PageViewArticleSerializer
 
+    def get_authenticators(self):
+        if self.request.method == "GET":
+            authors_id = self.request.query_params.get('authors_id')
+            queryset = models.Comment.objects.filter(authors_id=authors_id)
+            authentication_classes = []
+            permission_classes = []
+            serializer_class=[CommentSerializer,]
+        elif self.request.method == "DELETE":
+            authors_id = self.request.query_params.get('authors_id')
+            queryset = models.Comment.objects.filter(authors_id=authors_id)
+            filter_backends = [CommentFilterBackend, ]
+
+        else:
+            authors_id = self.request.query_params.get('authors_id')
+            filter_backends = [CommentFilterBackend, ]
+            queryset = models.Comment.objects.filter(authors_id=authors_id)
+            serializer_class = [Save_comment, ]
 
 
 
 
-class CommentView(CreateAPIView,DestroyAPIView,UpdateAPIView,RetrieveAPIView):
-    authors_id=self.request.query_params.get('authors_id')
-    queryset=models.Comment.objects.filter(authors_id=authors_id)
-    filter_backends = [CommentFilterBackend,]
-    serializer_class = [Save_comment,]
+
+
+
+
+
+
+
+
 
 
 

@@ -33,9 +33,9 @@ urlpatterns = [
 urlpatterns += [
     url(r'^v1/', include('V1.urls',namespace="V1")),
 ]
-# urlpatterns += [
-#     url(r'^home/artcile/(?P<pk>\d+)/$', views.ArticleView.as_view()),
-# ]
+urlpatterns += [
+    url(r'^v2/', include('V2.urls',namespace="V2")),
+]
 # urlpatterns += [
 #     url(r'^page/article/$', views.CommentView.as_view()),
 # ]
