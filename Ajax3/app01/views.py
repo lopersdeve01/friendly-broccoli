@@ -88,7 +88,7 @@ def jsontest(request):
         # ret_data_json = json.dumps(ret_data,ensure_ascii=False)
         #
         #
-        ret_data1=['aa',11]
+        ret_data1=['myclient',11]
         # return HttpResponse(ret_data_json,content_type='application/json')
         # return JsonResponse(ret_data)
         return JsonResponse(ret_data1,safe=False)

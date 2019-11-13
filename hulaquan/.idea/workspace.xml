@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="576eb852-ff07-40e6-a347-ba084ba02620" name="Default Changelist" comment="" />
+    <list default="true" id="576eb852-ff07-40e6-a347-ba084ba02620" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../autoserver/.idea/autoserver.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../autoserver/api/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../huolala/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../huolala/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ip/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ip/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../wupeiqi/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../wupeiqi/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +41,7 @@
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../huolala" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -105,6 +112,7 @@
       <workItem from="1573535375973" duration="691000" />
       <workItem from="1573546081344" duration="6132000" />
       <workItem from="1573562823472" duration="191000" />
+      <workItem from="1573614241370" duration="679000" />
     </task>
     <servers />
   </component>

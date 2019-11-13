@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4ac6e383-f22e-4143-b784-3434715cbf56" name="Default Changelist" comment="" />
+    <list default="true" id="4ac6e383-f22e-4143-b784-3434715cbf56" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../autoserver/.idea/autoserver.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../autoserver/api/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hulaquan/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../hulaquan/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../huolala/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../huolala/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../wupeiqi/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../wupeiqi/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +65,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../hulaquan" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -177,6 +184,8 @@
       <workItem from="1573552919517" duration="4801000" />
       <workItem from="1573560812649" duration="216000" />
       <workItem from="1573561602186" duration="1210000" />
+      <workItem from="1573613490719" duration="649000" />
+      <workItem from="1573614220203" duration="613000" />
     </task>
     <servers />
   </component>
