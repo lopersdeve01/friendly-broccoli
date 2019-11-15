@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="240feb0c-d1f2-48da-a9e3-f4b0655e4b01" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../hulaquan/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../hulaquan/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../huolala/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../huolala/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../huolala/V1/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../huolala/V1/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../huolala/huolala/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/../huolala/huolala/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../huolala/huolala/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/../huolala/huolala/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -62,7 +58,7 @@
     <property name="DatabaseDriversLRU" value="sqlite" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../huolala" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../autoserver" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -129,6 +125,8 @@
       <workItem from="1573544571143" duration="1502000" />
       <workItem from="1573565151457" duration="2167000" />
       <workItem from="1573604228574" duration="937000" />
+      <workItem from="1573654242549" duration="2585000" />
+      <workItem from="1573692032436" duration="70000" />
     </task>
     <servers />
   </component>

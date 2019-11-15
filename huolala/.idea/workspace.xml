@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a1d7dd1f-f404-43be-bc24-f7b0989e1d18" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/V1/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/V1/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../wupeiqi/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../wupeiqi/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -60,7 +61,7 @@
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ip" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -74,7 +75,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.settings">
+  <component name="RunManager" selected="Django server.huolala">
     <configuration name="settings" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="huolala" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -187,6 +188,7 @@
       <workItem from="1573563007812" duration="1039000" />
       <workItem from="1573564444521" duration="4877000" />
       <workItem from="1573604420928" duration="2001000" />
+      <workItem from="1573654230081" duration="3538000" />
     </task>
     <servers />
   </component>

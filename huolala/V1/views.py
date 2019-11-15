@@ -273,7 +273,7 @@ class PageViewArticleSerializer(serializers.ModelSerializer):
         model = models.Article
         fields = "__all__"
 
-class ArticleView(ListAPIView):
+class ArticleView(ListAPIView):   # 继承ListModelMixin,GenericAPIView
     authentication_classes = []
     permission_classes = []
     filter_backends = [FilterBackend,]

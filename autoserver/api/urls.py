@@ -4,6 +4,7 @@ from api import views
 urlpatterns = [
 
     url(r'^api/(?P<version>\w+)/', views.ServerView.as_view()),
+    url(r'^query/$',views.query)
 ]
 
 
