@@ -2,9 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="240feb0c-d1f2-48da-a9e3-f4b0655e4b01" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../huolala/V1/utils/aaa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../framwork/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../framwork/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hulala/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../hulala/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../huolala/.idea/dataSources/b481b222-9e79-4243-bb96-d5993b83828d.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../huolala/.idea/dataSources/b481b222-9e79-4243-bb96-d5993b83828d.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../huolala/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../huolala/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../huolala/V1/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/../huolala/V1/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../huolala/V1/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/../huolala/V1/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../huolala/V1/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../huolala/V1/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../huolala/V1/views1.py" beforeDir="false" afterPath="$PROJECT_DIR$/../huolala/V1/views1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../huolala/huolala/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/../huolala/huolala/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/views/account.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/views/account.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -58,7 +67,7 @@
     <property name="DatabaseDriversLRU" value="sqlite" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../autoserver" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -127,6 +136,7 @@
       <workItem from="1573604228574" duration="937000" />
       <workItem from="1573654242549" duration="2585000" />
       <workItem from="1573692032436" duration="70000" />
+      <workItem from="1573808868235" duration="9368000" />
     </task>
     <servers />
   </component>

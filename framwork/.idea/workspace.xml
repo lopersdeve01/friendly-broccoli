@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bcdea78b-79e1-430f-8047-311271a3c297" name="Default Changelist" comment="" />
+    <list default="true" id="bcdea78b-79e1-430f-8047-311271a3c297" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../huolala/V1/utils/aaa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hulala/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../hulala/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../huolala/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../huolala/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../huolala/V1/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/../huolala/V1/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../huolala/V1/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/../huolala/V1/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../huolala/V1/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../huolala/V1/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../huolala/V1/views1.py" beforeDir="false" afterPath="$PROJECT_DIR$/../huolala/V1/views1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../huolala/huolala/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/../huolala/huolala/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../wupeiqi/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../wupeiqi/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,8 +58,13 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="ProjectId" id="1TAyolsvEqVKBdZoiNXGDxeZGyG" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
@@ -152,11 +167,23 @@
       <workItem from="1573298014111" duration="4186000" />
       <workItem from="1573303228896" duration="1088000" />
       <workItem from="1573304380083" duration="585000" />
+      <workItem from="1573811342552" duration="38000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/framwork$Serializer.coverage" NAME="Serializer Coverage Results" MODIFIED="1572946552548" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/web" />

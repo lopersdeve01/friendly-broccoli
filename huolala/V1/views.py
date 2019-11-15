@@ -1,11 +1,11 @@
 from django.shortcuts import render
-
+from rest_framework.views import APIView
 from V1 import models
 from rest_framework import serializers
-from rest_framework.views import APIView
+
 from rest_framework.response import Response
 from rest_framework.filters import BaseFilterBackend
-
+from rest_framework_jwt.settings import api_settings
 
 from django.db.models import F,Count
 
@@ -140,41 +140,46 @@ from rest_framework import exceptions
 # 操作类
 from rest_framework.generics import ListAPIView,CreateAPIView,RetrieveAPIView,DestroyAPIView,UpdateAPIView
 
-class Authentication(BaseAuthentication):
-    def authenticate(self, request):
-        token = request.query_params.get('token')
-        if not token:
-            return (None,None)
-        user_object = models.User.objects.filter(token=token).first()
-        if user_object:
-            return (user_object,token)
-        return (None,None)
-class Permission(BasePermission):
-    message = {"status":False,"error":"登录成功之后才能评论"}
-    def has_permission(self, request, view):
-        if request.method == "GET":
-            return True
-        if request.user:
-            return True
-        return False
 
-    def has_object_permission(self, request, view, obj):
-        """
-        Return `True` if permission is granted, `False` otherwise.
-        """
-        return False
+
+    # def has_object_permission(self, request, view, obj):
+    #     """
+    #     Return `True` if permission is granted, `False` otherwise.
+    #     """
+    #     return False
 
 class LoginView(APIView):
     authentication_classes = []
     permission_classes = []
     def post(self,request,*args,**kwargs):
-        user_object = models.User.objects.filter(**request.data).first()
-        if not user_object:
+        print(request.data)
+        user = models.User.objects.filter(**request.data).first()
+        if not user:
             return Response('登录失败')
         random_string = str(uuid.uuid4())
-        user_object.token = random_string
-        user_object.save()
-        return Response(random_string)
+        user.token = random_string
+        user.save()
+
+        jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+        payload = jwt_payload_handler(user)
+        jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+        token = jwt_encode_handler(payload)
+        # return Response(random_string,{'code':10000,'data':token})
+        return Response({'code':10000,'data':token})
+# class LoginView(APIView):
+#     def post(self,request,*args,**kwargs):
+#         print(request.data)
+#         user=models.UserInfo.objects.filter(username=request.data.get('username'),password=request.data.get('password')).first()
+#         if not user:
+#             return Response({'code':10000,'error':'用户名或者密码错误'})
+#         jwt_payload_handler=api_settings.JWT_PAYLOAD_HANDLER
+#         payload=jwt_payload_handler(user)
+#
+#         jwt_encode_handler=api_settings.JWT_ENCODE_HANDLER
+#         token=jwt_encode_handler(payload)
+#         return Response({'code':10000,'data':token})
+
+
 
 
 # class MyPermission(BasePermission):
@@ -238,7 +243,8 @@ class Show_article(serializers.ModelSerializer):
 class Save_article(serializers.ModelSerializer):
     class Meta:
         model=models.Article
-        exclude=['author']
+        fields="__all__"
+        # exclude=['author']
 
 class Articledetails(serializers.ModelSerializer):
     class Meta:
@@ -256,12 +262,19 @@ class Save_comment(serializers.ModelSerializer):
 
 class FilterBackend(BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
+        # val=request.GET.get('cagetory')
         val = request.query_params.get('cagetory')
-        return queryset.filter(category_id=val)
-class SingleFilterBackend(BaseFilterBackend):
-    def filter_queryset(self,request,queryset,view):
-        pk=request.query_params.get('pk')
-        return queryset.filter(pk=pk)
+        print('val',val)
+        if val:
+            ret=queryset.filter(category=val)
+        else:
+            ret=queryset
+        return ret
+# class SingleFilterBackend(BaseFilterBackend):
+#     def filter_queryset(self,request,queryset,view):
+#         pk=request.query_params.get('pk')
+#         print('pk',pk)
+#         return queryset.filter(pk=pk)
 class CommentFilterBackend(BaseFilterBackend):
     def filter_queryset(self,request,queryset,view):
         cid=request.query_params.get('cid')
@@ -274,18 +287,21 @@ class PageViewArticleSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class ArticleView(ListAPIView):   # 继承ListModelMixin,GenericAPIView
-    authentication_classes = []
+    authentication_classes = []      # 根据请求方法，同意添加约束属性失败，因为无法获取request.method方法
     permission_classes = []
     filter_backends = [FilterBackend,]
     queryset = models.Article.objects.all()
-    serializer_class = Show_article
-class Add_Article(CreateAPIView):
-    Article_serializer_class = [Save_article,]
-    Articledetails_serializer_class=[Articledetails,]
+    serializer_class = [Show_article,]
+class Add_Article(CreateAPIView):   # 两张表格进行序列化，关键是建立序列化的类，通过可能是通过连表查询将另一张表的字段添加到一个序列化类中,
+    # 然后将数据提交后进行统一验证。  注意保存类与提交类之间的差异。
+    # Article_serializer_class = [Save_article,]
+    # Articledetails_serializer_class=[Articledetails,]
+    serializer_class = Save_article  # 关键是要信息可以加入，同时校验成功jik.
     def perform_create(self, serializer):
         serializer.save()
-class SingleAritcle(RetrieveAPIView,UpdateAPIView,DestroyAPIView):  # 注意此时查看单条评论不需要提供认证级登录，但是其他功能，
+class SingleAritcle(RetrieveAPIView,UpdateAPIView,DestroyAPIView,GenericAPIView):  # 注意此时查看单条评论不需要提供认证级登录，但是其他功能，
     # 例如更新与删除时需要作者才有权限去操作，所以需要认证，不能为空。此时需要加上方法判断条件
+    # retrieve中内部会将路由上的pk值获取，而不用单独传参数，多余作废
 
 
     # def get(self,request,*args,**kwargs):
@@ -301,12 +317,14 @@ class SingleAritcle(RetrieveAPIView,UpdateAPIView,DestroyAPIView):  # 注意此�
         # instance.save()
         # return result
     queryset = models.Article.objects.all()
-    filter_backends = [SingleFilterBackend,]
-    serializer_class = PageViewArticleSerializer
+    # filter_backends = [SingleFilterBackend,]
+    serializer_class = Save_article
     def get_authenticators(self):
         if self.request.method=="GET":
             authentication_classes = []
             permission_classes = []
+# {"img":1,"category": 1,"status": 1,"author": "bbb","content": "bbb","title": "BBBB","create_at": "2019-11-09T04:11:47.551011Z","scan": 0,"comment_count":1}
+
 
 
 class CommentView(CreateAPIView,UpdateAPIView,DestroyAPIView,RetrieveAPIView):

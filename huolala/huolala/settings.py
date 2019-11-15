@@ -131,7 +131,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'statics'),
+    os.path.join(BASE_DIR,'statics')
 ]
 
 
@@ -140,11 +140,24 @@ REST_FRAMEWORK={
     "PAGE_SIZE":2,  #将分页限制加入配置文件
     "DEFAULT_PAGINATION_CLASS":"rest_framework.pagination.PageNumberPagination", # 将默认分页类加入到配置文件中，作为全局变量，个别函数如果需要，则自己定制覆盖
     # 版本部分
-    "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.URLPathVersioning",
-    "ALLOWED_VERSIONS": ['v1', 'v2'],
-    'VERSION_PARAM': 'version',
-    # 认证部分
-    "DEFAULT_AUTHENTICATION_CLASSES": ["V1.views.Authentication", ],
+    # "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.URLPathVersioning",
+    # "ALLOWED_VERSIONS": ['v1', 'v2'],
+    # 'VERSION_PARAM': 'version',
+    # # 认证部分
+    "DEFAULT_AUTHENTICATION_CLASSES": ["V1.utils.aaa.Authentication", ],
+    "DEFAULT_UNAUTHENTICATION_CLASSES": ["V1.utils.aaa.AnnoyAuthentication", ],
+    "UNAUTHENTICATED_USER": None,
+    "UNAUTHENTICATED_TOKEN": None,
     # 权限部分
-    "DEFAULT_PERMISSION_CLASSES": ["V1.views.Permission", ]
-    }
+    "DEFAULT_PERMISSION_CLASSES": ["V1.utils.aaa.Permission", ],
+    # 节流
+    # "DEFAULT_Throttle_CLASSES": ["V1.utils.aaa.Permission", ],
+    "DEFAULT_THROTTLE_CLASSES": ["V1.utils.aaa.RateThrottle", ],
+    "DEFAULT_THROTTLE_RATES": {"anon": '3/m'}
+}
+
+# {"category":"2","content":"bbbb","title":"ffffff","comment_count":4,"author":2}
+
+
+import datetime
+JWT_AUTH={"JWT_EXPIRATION_DELTA":datetime.timedelta(minutes=10)}

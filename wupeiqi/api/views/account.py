@@ -18,3 +18,4 @@ class LoginView(APIView):
         jwt_encode_handler=api_settings.JWT_ENCODE_HANDLER
         token=jwt_encode_handler(payload)
         return Response({'code':10000,'data':token})
+# {"category":"2","content":"eeee","title":"ggggg","comment_count":3,"author":2}

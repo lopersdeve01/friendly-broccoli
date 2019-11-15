@@ -18,10 +18,12 @@ urlpatterns = [
 urlpatterns += [
     url(r'^login/$', views.LoginView.as_view()),
     url(r'^article/$', views.ArticleView.as_view()),
+    url(r'^article_add/$',views.Add_Article.as_view()),
+    url(r'^single_article/(?P<pk>\d+)/$',views.SingleAritcle.as_view()),
     url(r'^(?P<version>\w+)/article/$', views.ArticleView.as_view()),
     url(r'^page/article/(?P<pk>\d+)/$', views.CommentView.as_view()),
 
-
+# {"category":"2","content":"bbbb","title":"ffffff","comment_count":4}
 
 
 ]

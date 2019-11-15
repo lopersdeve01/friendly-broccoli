@@ -42,12 +42,12 @@ class ArticleDetails(models.Model):
 #     def __str__(self):
 #         return self.title
 class User(models.Model):
-    name=models.CharField(max_length=32,verbose_name='用户名')
+    username=models.CharField(max_length=32,verbose_name='用户名')
     password=models.CharField(max_length=32,verbose_name='密码')
     token=models.CharField(verbose_name='token',max_length=64,null=True,blank=True)
     roles=models.ForeignKey('Role',verbose_name='身份')
     def __str__(self):
-        return self.name
+        return self.username
 
 class Role(models.Model):
     name = models.CharField(verbose_name='身份', max_length=32)
@@ -69,10 +69,9 @@ class Comment(models.Model):
 
     # 标准的自关联字段
     parents=models.ForeignKey('self',verbose_name='回复',null=True,blank=True)
-
     articles = models.ForeignKey('Article', verbose_name='所属文章')
     def __str__(self):
-        return "%s:%s"%(self.users.name,self.articles.title)
+        return "%s:%s"%(self.users.username,self.articles.title)
 
 
 

@@ -50,7 +50,9 @@ class Show_article(serializers.ModelSerializer):
     status=serializers.SerializerMethodField()
     author=serializers.SerializerMethodField()
     content=serializers.SerializerMethodField()
+    create_at=serializers.SerializerMethodField()
     # comment_count=serializers.SerializerMethodField()
+    comment=serializers.SerializerMethodField()
     class Meta:
         model=models.Article
         fields="__all__"
@@ -68,6 +70,16 @@ class Show_article(serializers.ModelSerializer):
     # def get_comment_count(self,obj):
     #     ret=models.Comment.objects.filter(articles_id=obj.pk).Count('id')
     #     return ret
+    def get_create_at(self,obj):
+        return obj.create_at.strftime("%Y-%m-%d %H:%M:%S")
+
+    def get_comment(self,obj):
+        ret=models.Comment.objects.filter(articles=obj)
+        # ret=models.Comment.objects.filter(articles=obj).values('pk','content','create_at','users')
+        # return [{'pk':i.values('pk')} for i in ret]
+        # return ret
+        # return [{'pk':i[0].id,'content':i[0].content,'create_at':i[0].create_at.strftime("%Y-%m-%d %H:%M:%S"),'users':i[0].users.name}  for i in ret]
+        return [{'pk':i.id,'content':i.content,'create_at':i.create_at.strftime("%Y-%m-%d %H:%M:%S"),'users':i.users.name}  for i in ret]
 class Save_article(serializers.ModelSerializer):
     class Meta:
         model=models.Article
@@ -145,7 +157,8 @@ class CommentView(APIView):
         pk=kwargs.get('pk')
         ser=Show_comment(data=request.data)
         if ser.is_valid():
-            ser.save(authors_id=pk)
+            ser.save(articles_id=pk)
+
             return Response(ser.data)
         return Response(ser.errors)
     def put(self,request,*args,**kwargs):
@@ -161,16 +174,6 @@ class CommentView(APIView):
         cid=kwargs.get('cid')
         models.Comment.objects.filter(cid=cid).delete()
         return Response('OK')
-
-
-
-
-
-
-
-
-
-
 
 # 评论的增删改查
 # 评论查询在文章展示中出现，不再单独处理
