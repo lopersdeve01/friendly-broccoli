@@ -183,4 +183,13 @@ class CommentView(APIView):
 
 
 
+def query(request):
+    ret=models.Article.objects.filter(pk=1)
+    ret1=models.Article.objects.filter(pk=1).first()
+    print(ret.values("title"))
+    # print('ret[title]',ret['title'])
+    print(ret1.title)
+    # print(ret1['title'])
+    return Response("OK")
+
 

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api.apps.ApiConfig',
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -130,4 +131,12 @@ STATIC_URL = '/static/'
 REST_FRAWORK={
     'DEFAULT_VERSIONING_CLASS':"rest_framework.versioning.URLPathVersioning",
     "ALLOWDE_VERSION":['v1'],
+}
+
+CMDB_PLUGIN_DICT = { # 将函数的路径写进配置文件，只要循环配置文件，拿到路径对用列表，通过切割或者格式化，完成路径提取
+    "disk": 'api.plugins.disk.Disk',
+    "memory": "api.plugins.memory.Memory",
+    "nic": "api.plugins.nic.Nic",
+    "board": "api.plugins.board.Board",
+    "cpu": "api.plugins.cpu.CPU",
 }

@@ -330,23 +330,23 @@ class SingleAritcle(RetrieveAPIView,UpdateAPIView,DestroyAPIView,GenericAPIView)
 class CommentView(CreateAPIView,UpdateAPIView,DestroyAPIView,RetrieveAPIView):
     serializer_class = PageViewArticleSerializer
 
-    def get_authenticators(self):
-        if self.request.method == "GET":
-            authors_id = self.request.query_params.get('authors_id')
-            queryset = models.Comment.objects.filter(authors_id=authors_id)
-            authentication_classes = []
-            permission_classes = []
-            serializer_class=[CommentSerializer,]
-        elif self.request.method == "DELETE":
-            authors_id = self.request.query_params.get('authors_id')
-            queryset = models.Comment.objects.filter(authors_id=authors_id)
-            filter_backends = [CommentFilterBackend, ]
-
-        else:
-            authors_id = self.request.query_params.get('authors_id')
-            filter_backends = [CommentFilterBackend, ]
-            queryset = models.Comment.objects.filter(authors_id=authors_id)
-            serializer_class = [Save_comment, ]
+    # def get_authenticators(self):
+    #     if self.request.method == "GET":
+    #         authors_id = self.request.query_params.get('authors_id')
+    #         queryset = models.Comment.objects.filter(authors_id=authors_id)
+    #         authentication_classes = []
+    #         permission_classes = []
+    #         serializer_class=[CommentSerializer,]
+    #     elif self.request.method == "DELETE":
+    #         authors_id = self.request.query_params.get('authors_id')
+    #         queryset = models.Comment.objects.filter(authors_id=authors_id)
+    #         filter_backends = [CommentFilterBackend, ]
+    #
+    #     else:
+    #         authors_id = self.request.query_params.get('authors_id')
+    #         filter_backends = [CommentFilterBackend, ]
+    #         queryset = models.Comment.objects.filter(authors_id=authors_id)
+    #         serializer_class = [Save_comment, ]
 
 
 
